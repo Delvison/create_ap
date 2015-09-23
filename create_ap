@@ -834,6 +834,7 @@ print_client() {
     [[ -z "$hostname" ]] && hostname="*"
 
     printf "%-20s %-18s %s\n" "$mac" "$ipaddr" "$hostname"
+    notify-send "$mac $ipaddr $hostname"
 }
 
 list_clients() {
@@ -1570,6 +1571,7 @@ fi
 # enable Internet sharing
 if [[ "$SHARE_METHOD" != "none" ]]; then
     echo "Sharing Internet using method: $SHARE_METHOD"
+    notify-send "Sharing Internet using method: $SHARE_METHOD"
     if [[ "$SHARE_METHOD" == "nat" ]]; then
         iptables -t nat -I POSTROUTING -o ${INTERNET_IFACE} -s ${GATEWAY%.*}.0/24 -j MASQUERADE || die
         iptables -I FORWARD -i ${WIFI_IFACE} -s ${GATEWAY%.*}.0/24 -j ACCEPT || die
